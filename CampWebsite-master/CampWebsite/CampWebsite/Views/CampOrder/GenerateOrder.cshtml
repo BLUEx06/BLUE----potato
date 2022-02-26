@@ -1,0 +1,108 @@
+﻿@model IEnumerable<CampWebsite.ViewModels.PreOrderInfoViewModel>
+
+
+@{
+    ViewBag.Title = "GenerateOrder";
+}
+
+
+@{
+    var checkinStart = Model.First().fCheckinStart;
+    var checkinEnd = Model.Last().fCheckinEnd;
+    var stayNight = checkinEnd.Subtract(checkinStart).Days;
+}
+@{
+    var totalPrice = 0;
+    foreach (var i in Model)
+    {
+        totalPrice += i.fOrderPrice;
+    }
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p>訂房資訊</p>
+    <p>入住日期: @Model.First().fCheckinStart.GetDateTimeFormats('D')[0]</p>
+    <p>退宿日期: @Model.Last().fCheckinEnd.GetDateTimeFormats('D')[0]</p>
+    <p>總共入住: @stayNight 晚 </p>
+    <p>總價: TWD @totalPrice 元 </p>
+    <br />
+    <div class="form-horizontal">
+        <h4>旅客資料</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*姓名*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.First().tMember.fName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="fClientName" value="@Model.First().tMember.fName" />
+            </div>
+        </div>
+        @*EMAIL*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.First().tMember.fEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="fClientEmail" value="@Model.First().tMember.fEmail" />
+            </div>
+        </div>
+        @*電話*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.First().tMember.fPhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="fClientPhone" value="@Model.First().tMember.fPhoneNumber" />
+            </div>
+        </div>
+        <hr />
+        @{
+            int index = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <div class="form-group" @(item.fCheckinStart == checkinStart ? "" : "style = display:none")>
+                <input type="hidden" name="newOrderList[@index].tTent.fTentID" value="@item.tTent.fTentID" />
+                <input type="hidden" name="newOrderList[@index].fCheckinStart" value="@item.fCheckinStart" />
+                <input type="hidden" name="newOrderList[@index].fOrderPrice" value="@item.fOrderPrice" />
+                <p>帳棚名稱</p>
+                <input type="text" name="newOrderList[@index].tTent.fTentName" value="@item.tTent.fTentName" readonly />
+                <p>帳棚類型</p>
+                <input type="text" name="newOrderList[@index].tTent.fTentCategory" value="@item.tTent.fTentCategory" readonly />
+                <p>人數上限</p>
+                <input type="text" name="newOrderList[@index].tTent.fTentPeople" value="@item.tTent.fTentPeople" readonly />
+                <p>備註</p>
+                <div class="col-md-10">
+                    <input type="text" name="newOrderList[@index].fOrderComment" value="@item.fOrderComment" />
+                </div>
+            </div>
+            index++;
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="sweetalert2.all.min.js"></script>
+<script>
+    $(function () {
+            $("input[type='submit']").click(function () {
+                //使用方式
+                swalConfirm("確定刪除？", "", function ()
+                 {
+                    //Loading畫面，出處:http://malsup.com/jquery/block/
+                    $.blockUI();
+                    $.ajax({
+                        url: "@Url.Action("MyAction", "MyController")",
+                        method: "post",
+                        data: { },
+                        success: function (result) {
+                        }, complete: function () {
+                            $.unblockUI();
+                        }
+                    });//End ajax
+                }//end function
+                );//end swalConfirm
+            });//end click event
+        });
+</script>

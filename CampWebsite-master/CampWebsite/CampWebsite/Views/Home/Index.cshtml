@@ -1,0 +1,189 @@
+﻿<link rel="stylesheet" href="~/Content/homeindex.css">
+<!-- 大圖部分 -->
+<div class="main d-flex justify-content-center flex-column align-items-center position-relative">
+    <div>
+        <p class="fs-5 mb-3">週末要做什麼</p>
+        <h1>來露過人間</h1>
+        <button class="fs-5 mt-3 px-3 py-1" id="gogo">隨心所欲</button>
+    </div>
+    <a href="#here" class="position-absolute"><i class="fas fa-chevron-circle-down"></i></a>
+</div>
+
+<!-- 快速搜尋 -->
+<div class="bg-grey" id="here">
+    <div class="container pt-5">
+        <div class="row">
+            <h1 class="text-center">Dummy Heading</h1>
+            <p class="text-center">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, aliquid
+                minima expedita assumenda saepe, temporibus earum enim iste quasi Lorem
+                ipsum dolor sit amet consectetur adipisicing elit. Est, aliquid
+            </p>
+
+        </div>
+    </div>
+    <div class="container search-section">
+        <p class="fs-2 fw-bolder main-color pt-5 letter-sp-1">馬上出發吧</p>
+        <div class="d-flex justify-content-center my-5">
+            <div class="d-flex letter-sp-1 position-relative" id="search_section">
+                <input type="text" id="from" autocomplete="off" placeholder="入住日" required>
+                <input type="text" id="to" autocomplete="off" placeholder="離開日" required>
+                <div class="errorMsg opacity-0">請至少選擇兩天一夜</div>
+                <button id="searchBtn"><i class="fas fa-search"><span class="ms-1">搜尋</span></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 區域搜尋分類 -->
+    <div class="container class-section mt-5">
+        <p class="fs-2 fw-bolder mb-3 main-color letter-sp-1">為下一趟旅程尋找靈感</p>
+        <div class="row mb-3 mb-md-5 letter-sp-1">
+            <div class="col px-0" id="north">
+                <div class="d-flex flex-column align-items-center justify-content-center cover shadow-sm">
+                    <i class="fas fa-fish"></i>
+                    <p class="fs-3 fw-bolder">北部</p>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center back shadow-sm">
+                    <i class="fas fa-fish"></i>
+                    <p class="fs-3 fw-bolder">前往查看</p>
+                </div>
+            </div>
+            <div class="col px-0" id="central">
+                <div class="d-flex flex-column align-items-center justify-content-center cover shadow">
+                    <i class="fas fa-hippo"></i>
+                    <p class="fs-3 fw-bolder">中部</p>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center back shadow">
+                    <i class="fas fa-hippo"></i>
+                    <p class="fs-3 fw-bolder">前往查看</p>
+                </div>
+            </div>
+            <div class="col px-0">
+                <div class="d-flex flex-column align-items-center justify-content-center cover cover-other shadow">
+                    <p class="fs-3 fw-bolder"></p>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center back back-other shadow">
+                    <p class="fs-3 fw-bolder"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row pb-5 letter-sp-1">
+            <div class="col px-0">
+                <div class="d-flex flex-column align-items-center justify-content-center cover cover-other shadow">
+                    <p class="fs-3 fw-bolder"></p>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center back back-other shadow">
+                    <p class="fs-3 fw-bolder"></p>
+                </div>
+            </div>
+            <div class="col px-0" id="south">
+                <div class="d-flex flex-column align-items-center justify-content-center cover shadow">
+                    <i class="fas fa-crow"></i>
+                    <p class="fs-3 fw-bolder">南部</p>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center back shadow">
+                    <i class="fas fa-crow"></i>
+                    <p class="fs-3 fw-bolder">前往查看</p>
+                </div>
+            </div>
+            <div class="col px-0" id="east">
+                <div class="d-flex flex-column align-items-center justify-content-center cover shadow">
+                    <i class="fas fa-paw"></i>
+                    <p class="fs-3 fw-bolder">東部</p>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center back shadow">
+                    <i class="fas fa-paw"></i>
+                    <p class="fs-3 fw-bolder">前往查看</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var north = document.querySelector("#north");
+    var central = document.querySelector("#central");
+    var south = document.querySelector("#south");
+    var east = document.querySelector("#east");
+    var searchBtn = document.querySelector("#searchBtn");
+    var from = document.querySelector("#from");
+    var to = document.querySelector("#to");
+    var errorMsg = document.querySelector(".errorMsg");
+    var gogo = document.querySelector("#gogo")
+    gogo.addEventListener("click", function () {
+        location.href = "/Search/Search"
+    })
+    searchBtn.addEventListener("click", function () {
+        if (from.value != "" && to.value != "") {
+            if (from.value == to.value) {
+                errorMsg.classList.add("opacity-0");
+                let showagain = setTimeout(function () {
+                    errorMsg.classList.remove("opacity-0");
+                }, 400)
+            }
+            else {
+                document.cookie = `from=${encodeURIComponent(from.value)};path=/;max-age=10`
+                document.cookie = `to=${encodeURIComponent(to.value)};path=/;max-age=10`
+                location.href = "/Search/Search"
+            }
+        }
+        else {
+            errorMsg.classList.remove("opacity-0");
+        }
+    })
+    //按下按鈕時 建立cookie傳到search/search controller
+    function addCookie(areaSelected) {
+        document.cookie = `area=${encodeURIComponent(areaSelected)};path=/;max-age=10`
+        location.href = "/Search/Search";
+    }
+    north.addEventListener("click", function () {
+        addCookie("北")
+    })
+    central.addEventListener("click", function () {
+        addCookie("中")
+    })
+    south.addEventListener("click", function () {
+        addCookie("南")
+    })
+    east.addEventListener("click", function () {
+        addCookie("東")
+    })
+    $(function () {
+    })
+</script>
+
+<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        $("#from").datepicker({
+            defaultDate: "d",
+            changeMonth: true,
+            numberOfMonths: 1,
+            minDate: "d",
+            showButtonPanel: true,
+            dateFormat: "yy/mm/dd",
+            onClose: function (selectedDate) {
+                $("#to").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#to").datepicker({
+            defaultDate: "d",
+            minDate: "d",
+            changeMonth: true,
+            numberOfMonths: 1,
+            showButtonPanel: true,
+            onClose: function (selectedDate) {
+                $("#from").datepicker("option", "maxDate", selectedDate);
+                if (from.value == selectedDate) {
+                    console.log("請至少選擇兩天一夜")
+                    errorMsg.classList.remove("opacity-0");
+                }
+                else {
+                    errorMsg.classList.add("opacity-0");
+                }
+            },
+            dateFormat: "yy/mm/dd"
+        });
+    });
+</script>

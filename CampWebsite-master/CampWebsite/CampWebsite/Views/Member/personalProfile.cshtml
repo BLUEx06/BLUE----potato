@@ -1,0 +1,129 @@
+﻿
+<style>
+    .imageBox {
+        width: auto;
+        height: 10rem;
+    }
+
+    .image100 {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container d-flex justify-content-center mt-5">
+        <div class="col-12 col-lg-6 border shadow min-vh-100">
+            <ul class="nav nav-pills nav-justified" id="tabSwitch">
+                <li class="nav-item"><a class="nav-link " data-bs-toggle="pill" href="#p1Profile">會員資料</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#p2Favorite">我的收藏</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#p3Order" id="tabMyOrders">歷史訂單</a></li>
+            </ul>
+
+            <!-- All tabs main div -->
+            <div class="tab-content" id="mainContent">
+                <!-- Profile tab start                 會員資料頁面-->
+                <div class="tab-pane fade active justify-content-center px-5" id="p1Profile">
+                    @Html.Action("MyProfilePartialView")
+                </div>
+                <!-- Favorite tab start                營區收藏頁面 -->
+                <div class="tab-pane fade p-5" id="p2Favorite">
+                    <h4 class="text-center">營區收藏</h4>
+                    @Html.Action("MyFavoritePartialView")
+                </div>
+                <!-- Order History tab start           歷史訂單頁面-->
+                <div class="tab-pane fade my-4 justify-content-center px-5" id="p3Order">
+                    <h3 class="text-center">歷史訂單</h3>
+                    @Html.Action("MyOrdersPartialView")
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section scriptBody{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+    var picUrl = "";
+    //script for 照片上傳
+    $("#ChangePic").change(function () {
+
+        previewImg(this.files);
+    });
+    function previewImg(files) {
+        if (files.length == 0)
+            return;
+        var file = files[0];
+        var fr = new FileReader();
+
+        //註冊：選檔被讀取完成後之事件處理器
+        fr.onload =
+            function () {
+                picUrl = fr.result;
+                $('#p1Profile img').attr({ src: fr.result });
+                var data = new FormData();
+                data.append("UploadedImage", file);
+                sendAjax(data);
+            };
+        fr.readAsDataURL(file);
+    }
+
+    function sendAjax(data) {
+        var ajaxRequest = $.ajax({
+                type: "POST",
+                url: "@Url.Action("uploadPersonalPic")",
+                    contentType: false,         // 告訴jQuery不要去設置Content-Type
+                    processData: false,         // 告訴jQuery不要去處理發送的數據
+                    dataType: "json",
+                    data: data
+            })
+                .done(function (data, textStatus) {
+                    Swal.fire({
+                        //position: 'top-end',
+                        icon: 'success',
+                        title: '會員照片上傳成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    $('#navUserPic').attr({ src: picUrl });
+                })
+                .fail(function() {
+                    console.log("回傳失敗");
+                });
+    }
+    </script>
+    <script>
+        //密碼隱藏與顯示
+        $('#psShowHide').click(function () {
+            let pass_type = $('#userPW').attr('type');
+
+            if (pass_type === 'password') {
+                $('#userPW').attr('type', 'text');
+                $('#psShowHide').removeClass('fa-eye-slash').addClass('fa-eye');
+            } else {
+                $('#userPW').attr('type', 'password');
+                $('#psShowHide').removeClass('fa-eye').addClass('fa-eye-slash');
+            }
+        })
+    </script>
+
+    <script>
+        //網頁重載後，顯示重載前所顯示的頁籤
+        $(function () {
+            $('a[data-bs-toggle="pill"]').on("show.bs.tab", function () {
+                localStorage.setItem("activeTab", $(this).attr("href"));
+            });
+            var activeTab = localStorage.getItem("activeTab");
+            if (activeTab) {
+                $('#tabSwitch a[href="' + activeTab + '"]').tab("show");
+            } else {
+                $(`#tabSwitch li:eq(0) a`).tab("show");
+            }
+        });
+    </script>
+}

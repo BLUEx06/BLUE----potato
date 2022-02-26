@@ -1,0 +1,193 @@
+﻿@model IEnumerable<CampWebsite.Models.tOrder>
+
+@{
+    ViewBag.Title = "歷史訂單";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        text-align: center;
+        min-width: 3rem;
+    }
+    body {
+         padding: 5px ;
+    }
+</style>
+
+
+
+    <div class="container">
+        <div class="mb-5"></div>
+        <div class="page-header mb-3">
+        <h2>歷史訂單</h2>
+            <br />
+        </div>
+
+        <!--search and filter-->
+        <div class="mb-5">
+            <div class="form-group mb-5">
+                <div class="row">
+                    <div class="col">
+                        <input class="form-control" type="text" id="phoneFilter" onkeyup="phoneFilter()" placeholder="用電話過濾結果">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" type="text" id="nameFilter" onkeyup="nameFilter()" placeholder="用名字過濾結果">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive" style="user-select:none">
+            <table id="historyTable" class="table table-hover table-striped align-middle" style="user-select:none">
+                <thead class="">
+                    <tr>
+                        <th class="text-bold">
+                            訂單編號
+                        </th>
+                        <th class="text-bold">
+                            下單客戶
+                        </th>
+                        <th class="text-bold">
+                            電郵地址
+                        </th>
+                        <th class="text-bold">
+                            連絡電話
+                        </th>
+                        <th class="text-bold">
+                            入住日期
+                        </th>
+                        <th class="text-bold">
+                            訂單金額
+                        </th>
+                        <th class="text-bold">
+                            訂單評價
+                        </th>
+                        @*<th class="text-bold">
+                               是否付款
+                            </th>*@
+                        <th class="text-bold">
+                            @Html.DisplayNameFor(model => model.tMember.fName)
+                        </th>
+                        <th class="text-bold">
+                            @Html.DisplayNameFor(model => model.tTent.fTentName)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fOrderConfirmCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fClientEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fClientPhone)
+            </td>
+            <td>
+                @item.fCheckinDate.ToShortDateString()
+                @*@Html.DisplayFor(modelItem => item.fCheckinDate)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fOrderPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fOrderComment)
+            </td>
+            @*<td>
+                    @{ if (item.fOrderIsPaid == true)
+                    {
+                            <i class="fa-regular fa-check"></i>
+                    }
+                    else
+                    {
+                            <i class="fa-regular fa-xmark"></i>
+                    }
+                    }
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.tMember.fName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tTent.fTentName)
+            </td>
+        </tr>
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container-xl d-flex justify-content-center mt-5 disabled">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        const table = document.getElementById("historyTable");
+
+        function nameFilter() {
+            var filter, tr, td, txtValue;
+            filter = document.getElementById("nameFilter").value.toUpperCase();
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function phoneFilter() {
+            var filter, tr, td, txtValue;
+            filter = document.getElementById("phoneFilter").value;
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[3];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+
+
+    </script>

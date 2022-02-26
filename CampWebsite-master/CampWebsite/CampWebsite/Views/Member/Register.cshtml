@@ -1,0 +1,57 @@
+﻿@model CampWebsite.ViewModels.RegisterViewModel
+<link href="~/Content/memberRigister.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-material login-block">
+        <div class="auth-box card ">
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center heading">會員註冊</h1>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="fName" value="" placeholder="Display name" id="first_name" />
+                    @Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="fEmail" value="" placeholder="Email" id="email" />
+                    @Html.ValidationMessageFor(model => model.fEmail, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="fPassword" placeholder="Password: 8-16個字元(須包含大小寫英文與數字)" value="" id="password" />
+                    @Html.ValidationMessageFor(model => model.fPassword, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="ConfirmPassword" placeholder="Repeat password" value="" id="password_confirm" />
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group d-flex justify-content-around ">
+                    <input type="radio" class="btn-check" name="fGroup" id="gCustomer" value="0" autocomplete="off" checked>
+                    <label class="btn btn-outline-success" for="gCustomer">一般會員</label>
+
+                    <input type="radio" class="btn-check" name="fGroup" id="gVendor" value="1" autocomplete="off">
+                    <label class="btn btn-outline-success" for="gVendor">成為營主</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-danger">@ViewBag.Message</p>
+                        <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center w-100 m-b-20" name="submit" value="快速註冊" />
+                    </div>
+                </div>
+                <br />
+                <p class="text-inverse text-center">已經有會員帳號了嗎? <a href="/Member/Login">Login</a></p>
+            </div>
+        </div>
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+

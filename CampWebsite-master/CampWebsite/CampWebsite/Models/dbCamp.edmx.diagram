@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bab0da770a234d66a5a3433f99401f87" Name="Diagram1">
+        <EntityTypeShape EntityType="dbCampModel.tCampsite" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbCampModel.tComment" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbCampModel.tMember" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbCampModel.tOrder" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbCampModel.tTag" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbCampModel.tTent" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbCampModel.tTentPhoto" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <AssociationConnector Association="dbCampModel.FK__tCampsite__fMemb__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.FK__tComment__fCamps__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.FK__tTent__fCampsite__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.FK__tTentPhot__fCamp__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.FK__tComment__fMembe__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.FK__tOrder__fMemberI__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.FK__tOrder__fTentID__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.tCampFavorite" ManuallyRouted="false" />
+        <AssociationConnector Association="dbCampModel.tCampTag" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,115 @@
+﻿@model  CampWebsite.ViewModels.NewTentViewModel
+
+@{
+    ViewBag.Title = "新增住宿選項";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .required::after {
+        content: " *";
+        color: red;
+    }
+
+    .input-validation-error {
+        border: 2px solid red;
+    }
+</style>
+
+<div class="container">
+    <div class="page-header mb-3">
+        <h3>新增住宿選項</h3>
+        <br />
+        <span>照片晚點再說</span>
+    </div>
+    <br />
+
+    @using (Html.BeginForm())
+    {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.CampsiteID)
+
+            <div class="col-md-10 col-lg-8">
+
+                @* which campsite *@
+                <div class="form-group mb-3">
+                    <label class="form-label">營區</label>
+                    <br />
+                    <label class="form-label">@Model.CampsiteName</label>
+                </div>
+
+                @*name*@
+                <div class="form-group mb-5">
+                    @Html.LabelFor(model => model.tTent.fTentName, new { @class = "control-label card-title required" })
+                    <br />
+                    <span class="form-text">最多12個字唷</span>
+                    <br />
+                    @Html.EditorFor(model => model.tTent.fTentName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tTent.fTentName, "", new { @class = "text-danger" })
+                </div>
+
+                @*房型選單*@
+                <div class="form-group mb-5">
+                    @Html.LabelFor(model => model.tTent.fTentCategory, new { @class = "control-label card-title required" })
+                    <input class="form-control" list="tags" placeholder="下拉選擇   或新增選項" data-val="true" data-val-required="必填" style="max-width:300px" id="Category" name="tTent.fTentCategory">
+                    <datalist id="tags">
+                        <option value="小帳棚">小帳棚</option>
+                        <option value="大帳篷">大帳篷</option>
+                        <option value="露營車">露營車</option>
+                        <option value="小木屋">小木屋</option>
+                        <option value="Villa">Villa</option>
+                        <option value="露營區域">露營區域</option>
+                    </datalist>
+
+                </div>
+
+
+                @*數量人數*@
+                <div class="form-group mb-5">
+                    <div class="row">
+                        <div class="col">
+                            <label class="card-title control-label required">數量</label>
+                            <span class="form-text">同房型，最多一次增加10間</span>
+                            <br />
+                            <input class="form-control" type="number" name="Quantity" value="1" min="1" max="10" />
+                        </div>
+                        <div class="col">
+                            @Html.LabelFor(model => model.tTent.fTentPeople, new { @class = "control-label card-title required" })
+                            <input type="number" value="4" class="form-control" data-val="true" data-val-number="人數請輸入數字" data-val-required="必填欄位" id="tTent_fTentPeople" name="tTent.fTentPeople" style="max-width: 300px">
+                            @*<input type="number" name="@Model.tTent.fTentPeople" value="4" min="4" />*@
+                            @*@Html.EditorFor(model => model.fTentPeople, new { htmlAttributes = new { @class = "form-control", style = "max-width: 300px" } })*@
+                        </div>
+                    </div>
+                </div>
+
+
+                @*收費*@
+                <div class="form-group mb-5">
+                    <div class="row">
+                        <div class="col">
+                            @Html.LabelFor(model => model.tTent.fTentPriceWeekday, new { @class = "control-label  card-title required" })
+                            @Html.EditorFor(model => model.tTent.fTentPriceWeekday, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.tTent.fTentPriceWeekday, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+                            @Html.LabelFor(model => model.tTent.fTentPriceWeekend, new { @class = "control-label card-title required" })
+                            @Html.EditorFor(model => model.tTent.fTentPriceWeekend, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.tTent.fTentPriceWeekend, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        新增住宿
+                    </button>
+                </div>
+
+            </div>
+         }
+</div>
+
+
+
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
