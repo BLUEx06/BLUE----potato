@@ -210,9 +210,10 @@
             $(".dayOffCheck").click(function () {
                 if (this.checked == true) {
                     if (this.value == "0") {
-                        console.log("Sunday");
                         $(".dayOffCheck").prop('checked',false);
-                        this.prop('checked', true);
+                        $('.dayOffCheck')[7].checked = true
+
+                    //    $(".無公休").checked = true;
                     }
 
                 }

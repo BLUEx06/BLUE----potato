@@ -41,6 +41,16 @@ namespace CampWebsite.Controllers
         {
             ViewBag.cName = cName;
             dbCampEntities camp = new dbCampEntities();
+            //DateTime today = DateTime.Now.Date;
+            //var Tents =
+            //    from t in camp.tTent
+            //    join o in camp.tOrder on t.fTentID equals o.fTentID
+            //    where o.fCheckinDate == today
+            //    select new
+            //    {
+            //        t,
+            //        o.fCheckinDate
+            //    };
             var Tents =
                 from t in camp.tTent
                 where t.fCampsiteID == cID

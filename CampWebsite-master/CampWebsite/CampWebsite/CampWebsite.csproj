@@ -165,6 +165,7 @@
       <LastGenOutput>dbCamp.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\CampSite.js" />
+    <Content Include="Scripts\entryAnimation\entry.js" />
     <Content Include="Scripts\jQuery\jquery-3.6.0.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>

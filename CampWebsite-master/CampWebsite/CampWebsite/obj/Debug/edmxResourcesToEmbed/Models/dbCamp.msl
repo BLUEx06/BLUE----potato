@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbCampModelStoreContainer" CdmEntityContainer="dbCampEntities">
+    <EntitySetMapping Name="tCampsite">
+      <EntityTypeMapping TypeName="dbCampModel.tCampsite">
+        <MappingFragment StoreEntitySet="tCampsite">
+          <ScalarProperty Name="fCampsiteID" ColumnName="fCampsiteID" />
+          <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+          <ScalarProperty Name="fCampsiteName" ColumnName="fCampsiteName" />
+          <ScalarProperty Name="fCampsitePhone" ColumnName="fCampsitePhone" />
+          <ScalarProperty Name="fCampsiteArea" ColumnName="fCampsiteArea" />
+          <ScalarProperty Name="fCampsiteCity" ColumnName="fCampsiteCity" />
+          <ScalarProperty Name="fCampsiteAddress" ColumnName="fCampsiteAddress" />
+          <ScalarProperty Name="fCampsiteIntroduction" ColumnName="fCampsiteIntroduction" />
+          <ScalarProperty Name="fCampsiteAltitude" ColumnName="fCampsiteAltitude" />
+          <ScalarProperty Name="fCampsiteClosedDay" ColumnName="fCampsiteClosedDay" />
+          <ScalarProperty Name="fCampsiteCheckInTime" ColumnName="fCampsiteCheckInTime" />
+          <ScalarProperty Name="fCampsiteCheckOutTime" ColumnName="fCampsiteCheckOutTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tComment">
+      <EntityTypeMapping TypeName="dbCampModel.tComment">
+        <MappingFragment StoreEntitySet="tComment">
+          <ScalarProperty Name="fCommentID" ColumnName="fCommentID" />
+          <ScalarProperty Name="fOrderConfirmCode" ColumnName="fOrderConfirmCode" />
+          <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+          <ScalarProperty Name="fCampsiteID" ColumnName="fCampsiteID" />
+          <ScalarProperty Name="fComment" ColumnName="fComment" />
+          <ScalarProperty Name="fCommentScore" ColumnName="fCommentScore" />
+          <ScalarProperty Name="fCommentTime" ColumnName="fCommentTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tMember">
+      <EntityTypeMapping TypeName="dbCampModel.tMember">
+        <MappingFragment StoreEntitySet="tMember">
+          <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+          <ScalarProperty Name="fName" ColumnName="fName" />
+          <ScalarProperty Name="fEmail" ColumnName="fEmail" />
+          <ScalarProperty Name="fPassword" ColumnName="fPassword" />
+          <ScalarProperty Name="fPhoneNumber" ColumnName="fPhoneNumber" />
+          <ScalarProperty Name="fSex" ColumnName="fSex" />
+          <ScalarProperty Name="fBirthday" ColumnName="fBirthday" />
+          <ScalarProperty Name="fPhoto" ColumnName="fPhoto" />
+          <ScalarProperty Name="fGroup" ColumnName="fGroup" />
+          <ScalarProperty Name="fVerified" ColumnName="fVerified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tOrder">
+      <EntityTypeMapping TypeName="dbCampModel.tOrder">
+        <MappingFragment StoreEntitySet="tOrder">
+          <ScalarProperty Name="fOrderID" ColumnName="fOrderID" />
+          <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+          <ScalarProperty Name="fTentID" ColumnName="fTentID" />
+          <ScalarProperty Name="fOrderConfirmCode" ColumnName="fOrderConfirmCode" />
+          <ScalarProperty Name="fClientName" ColumnName="fClientName" />
+          <ScalarProperty Name="fClientEmail" ColumnName="fClientEmail" />
+          <ScalarProperty Name="fClientPhone" ColumnName="fClientPhone" />
+          <ScalarProperty Name="fCheckinDate" ColumnName="fCheckinDate" />
+          <ScalarProperty Name="fOrderPrice" ColumnName="fOrderPrice" />
+          <ScalarProperty Name="fOrderComment" ColumnName="fOrderComment" />
+          <ScalarProperty Name="fOrderIsPaid" ColumnName="fOrderIsPaid" />
+          <ScalarProperty Name="fOrderCreatedTime" ColumnName="fOrderCreatedTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tTag">
+      <EntityTypeMapping TypeName="dbCampModel.tTag">
+        <MappingFragment StoreEntitySet="tTag">
+          <ScalarProperty Name="fTagID" ColumnName="fTagID" />
+          <ScalarProperty Name="fTagName" ColumnName="fTagName" />
+          <ScalarProperty Name="fTagType" ColumnName="fTagType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tTent">
+      <EntityTypeMapping TypeName="dbCampModel.tTent">
+        <MappingFragment StoreEntitySet="tTent">
+          <ScalarProperty Name="fTentID" ColumnName="fTentID" />
+          <ScalarProperty Name="fCampsiteID" ColumnName="fCampsiteID" />
+          <ScalarProperty Name="fTentName" ColumnName="fTentName" />
+          <ScalarProperty Name="fTentCategory" ColumnName="fTentCategory" />
+          <ScalarProperty Name="fTentPeople" ColumnName="fTentPeople" />
+          <ScalarProperty Name="fTentPriceWeekday" ColumnName="fTentPriceWeekday" />
+          <ScalarProperty Name="fTentPriceWeekend" ColumnName="fTentPriceWeekend" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tTentPhoto">
+      <EntityTypeMapping TypeName="dbCampModel.tTentPhoto">
+        <MappingFragment StoreEntitySet="tTentPhoto">
+          <ScalarProperty Name="fID" ColumnName="fID" />
+          <ScalarProperty Name="fCampsiteID" ColumnName="fCampsiteID" />
+          <ScalarProperty Name="fTentPhotoURL" ColumnName="fTentPhotoURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="tCampFavorite" TypeName="dbCampModel.tCampFavorite" StoreEntitySet="tCampFavorite">
+      <EndProperty Name="tCampsite">
+        <ScalarProperty Name="fCampsiteID" ColumnName="fCampsiteID" />
+      </EndProperty>
+      <EndProperty Name="tMember">
+        <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tCampTag" TypeName="dbCampModel.tCampTag" StoreEntitySet="tCampTag">
+      <EndProperty Name="tCampsite">
+        <ScalarProperty Name="fCampsiteID" ColumnName="fCampsiteID" />
+      </EndProperty>
+      <EndProperty Name="tTag">
+        <ScalarProperty Name="fTagID" ColumnName="fTagID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
