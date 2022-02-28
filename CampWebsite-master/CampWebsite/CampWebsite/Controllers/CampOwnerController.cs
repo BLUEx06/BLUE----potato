@@ -87,6 +87,26 @@ namespace CampWebsite.Controllers
         }
 
         [Authorize(Roles = "1")]
+        public ActionResult TonightsOrdersForTent(int tID, string tName)
+        {
+            ViewBag.tName = tName;
+            dbCampEntities camp = new dbCampEntities();
+            var futureOrders =
+                from o in camp.tOrder
+                where o.fTentID == tID
+                where o.fCheckinDate == DateTime.Now.Date
+                select o;
+
+            if (futureOrders.Count() != 0)
+            {
+                return View(futureOrders);
+            }
+            else
+            {
+                return Json(null);
+            }
+        }
+        [Authorize(Roles = "1")]
         public ActionResult FutureOrdersForTent(int tID, string tName)
         {
             ViewBag.tName = tName;

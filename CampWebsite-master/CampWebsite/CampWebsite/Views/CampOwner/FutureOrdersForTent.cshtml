@@ -28,29 +28,26 @@
         <thead class="">
             <tr>
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fOrderConfirmCode)
+                    訂單編號
                 </th>
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fClientName)
+                    下單客戶
                 </th>
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fClientEmail)
+                    電郵地址
                 </th>
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fClientPhone)
+                    連絡電話
                 </th>
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fCheckinDate)
+                    入住日期
                 </th>
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fOrderPrice)
+                    訂單金額
                 </th>
                 
                 <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fOrderIsPaid)
-                </th>
-                <th class="text-bold">
-                    @Html.DisplayNameFor(model => model.fOrderCreatedTime)
+                    是否付款
                 </th>
                 <th class="text-bold">
                     @Html.DisplayNameFor(model => model.tMember.fName)
@@ -85,10 +82,6 @@
                     
                     <td>
                         <i class="fa-solid fa-check">已付款</i>
-                    </td>
-                    <td>
-                        @item.fOrderCreatedTime.ToShortDateString()
-                        @*@Html.DisplayFor(modelItem => item.fOrderCreatedTime)*@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.tMember.fName)

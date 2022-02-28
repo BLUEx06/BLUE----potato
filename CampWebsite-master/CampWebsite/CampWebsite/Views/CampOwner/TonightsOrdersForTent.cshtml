@@ -1,0 +1,107 @@
+﻿@model CampWebsite.Models.tOrder
+
+@{
+    ViewBag.Title = "TonightsOrdersForTent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TonightsOrdersForTent</h2>
+
+<div>
+    <h4>tOrder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fOrderConfirmCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fOrderConfirmCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fClientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fClientName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fClientEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fClientEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fClientPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fClientPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fCheckinDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fCheckinDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fOrderPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fOrderPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fOrderComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fOrderComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fOrderIsPaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fOrderIsPaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fOrderCreatedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fOrderCreatedTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tMember.fName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tMember.fName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tTent.fTentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tTent.fTentName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.fOrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

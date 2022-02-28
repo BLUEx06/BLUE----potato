@@ -298,6 +298,7 @@
     <Content Include="Views\Member\MyOrdersPartialView.cshtml" />
     <Content Include="Views\Member\MyProfilePartialView.cshtml" />
     <Content Include="Views\CampSite\ShowTentPhoto.cshtml" />
+    <Content Include="Views\CampOwner\TonightsOrdersForTent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
