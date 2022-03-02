@@ -20,8 +20,12 @@ namespace CampWebsite.ViewModels
         [Required(ErrorMessage = "請選擇封面照片！")]
         public HttpPostedFileBase CoverPhoto { get; set; }
 
-        //public tTag[] tags { get; set; }
-        //public List<tTag> PickTags { get; set; }
+        //
+        // Tag List
+        public CTagsSelect firstTag { get; set; }
+
+        public List<CTagsSelect> SelectTags { get; set; }
+
 
         //
         // DropDownList => CityArea
@@ -37,7 +41,6 @@ namespace CampWebsite.ViewModels
         // DropDownList => SelectCity
         public List<SelectListItem> SelectCityNorth = new List<SelectListItem>()
             {
-                new SelectListItem {Text="台北市", Value="台北市" },
                 new SelectListItem {Text="新北市", Value="新北市" },
                 new SelectListItem {Text="桃園市", Value="桃園市" },
                 new SelectListItem {Text="新竹縣", Value="新竹縣" },
@@ -47,16 +50,13 @@ namespace CampWebsite.ViewModels
         {
                 new SelectListItem {Text="苗栗縣", Value="苗栗縣" },
                 new SelectListItem {Text="台中市", Value="台中市" },
-                new SelectListItem {Text="彰化縣", Value="彰化縣" },
                 new SelectListItem {Text="南投縣", Value="南投縣" },
         };
 
         public List<SelectListItem> SelectCitySouth = new List<SelectListItem>()
         {
-                new SelectListItem {Text="雲林縣", Value="雲林縣" },
                 new SelectListItem {Text="嘉義縣", Value="嘉義縣" },
                 new SelectListItem {Text="高雄市", Value="高雄市" },
-                new SelectListItem {Text="台南市", Value="台南市" },
                 new SelectListItem {Text="屏東縣", Value="屏東縣" },
         };
 
@@ -74,17 +74,8 @@ namespace CampWebsite.ViewModels
         };
 
         // DayOff CheckBox
-        public List<DayOff> DayOffs = new List<DayOff>()
-        {
-            new DayOff { Day ="星期一", Value = "1", Checked = false },
-            new DayOff { Day ="星期二", Value = "2", Checked = false },
-            new DayOff { Day ="星期三", Value = "3", Checked = false },
-            new DayOff { Day ="星期四", Value = "4", Checked = false },
-            new DayOff { Day ="星期五", Value = "5", Checked = false },
-            new DayOff { Day ="星期六", Value = "6", Checked = false },
-            new DayOff { Day ="星期天", Value = "7", Checked = false },
-            new DayOff { Day ="無公休", Value = "0", Checked = false },
-        };
+        public List<DayOff> DayOffs { get; set; }
+
 
     }
 }

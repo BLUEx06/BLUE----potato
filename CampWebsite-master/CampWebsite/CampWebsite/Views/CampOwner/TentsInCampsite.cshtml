@@ -21,9 +21,9 @@
 <div class="container min-vh-100">
     <div class="mb-5"></div>
     <div class="page-header mb-3">
-        <h2>帳篷一覽</h2>
+        <h2>@ViewBag.cName</h2>
         <br />
-        <span>新增住宿要 <a href="javascript:history.back()" class="link-primary">回到上一頁</a></span>
+        <span>新增住宿要 @Html.ActionLink("回到上一頁", "FindMyCampsites")</span>
     </div>
 
     <table class="table table-hover table-striped align-middle" style="user-select:none">
@@ -51,7 +51,7 @@
                     未來訂單
                 </th>
                 <th class="text-bold">
-                    上傳照片
+                    上傳封面
                 </th>
             </tr>
         </thead>

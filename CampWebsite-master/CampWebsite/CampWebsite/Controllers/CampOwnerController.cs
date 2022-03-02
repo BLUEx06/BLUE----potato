@@ -41,16 +41,6 @@ namespace CampWebsite.Controllers
         {
             ViewBag.cName = cName;
             dbCampEntities camp = new dbCampEntities();
-            //DateTime today = DateTime.Now.Date;
-            //var Tents =
-            //    from t in camp.tTent
-            //    join o in camp.tOrder on t.fTentID equals o.fTentID
-            //    where o.fCheckinDate == today
-            //    select new
-            //    {
-            //        t,
-            //        o.fCheckinDate
-            //    };
             var Tents =
                 from t in camp.tTent
                 where t.fCampsiteID == cID
@@ -87,26 +77,6 @@ namespace CampWebsite.Controllers
         }
 
         [Authorize(Roles = "1")]
-        public ActionResult TonightsOrdersForTent(int tID, string tName)
-        {
-            ViewBag.tName = tName;
-            dbCampEntities camp = new dbCampEntities();
-            var futureOrders =
-                from o in camp.tOrder
-                where o.fTentID == tID
-                where o.fCheckinDate == DateTime.Now.Date
-                select o;
-
-            if (futureOrders.Count() != 0)
-            {
-                return View(futureOrders);
-            }
-            else
-            {
-                return Json(null);
-            }
-        }
-        [Authorize(Roles = "1")]
         public ActionResult FutureOrdersForTent(int tID, string tName)
         {
             ViewBag.tName = tName;
@@ -137,13 +107,41 @@ namespace CampWebsite.Controllers
         public ActionResult NewCampsite()
         {
             NewCampsiteViewModel vm = new NewCampsiteViewModel();
+            dbCampEntities db = new dbCampEntities();
+            vm.SelectTags = new List<CTagsSelect>();
+            var Tags =
+                (from t in db.tTag
+                select t);
+
+            foreach (var tag in Tags)
+            {
+                CTagsSelect s = new CTagsSelect()
+                {
+                    TagID = tag.fTagID,
+                    TagName = tag.fTagName,
+                };
+                vm.SelectTags.Add(s);
+            }
+            vm.DayOffs = new List<DayOff>()
+            {
+                new DayOff { Day = "星期一", Value = "1", IsChecked = false },
+                new DayOff { Day = "星期二", Value = "2", IsChecked = false },
+                new DayOff { Day = "星期三", Value = "3", IsChecked = false },
+                new DayOff { Day = "星期四", Value = "4", IsChecked = false },
+                new DayOff { Day = "星期五", Value = "5", IsChecked = false },
+                new DayOff { Day = "星期六", Value = "6", IsChecked = false },
+                new DayOff { Day = "星期七", Value = "7", IsChecked = false },
+                new DayOff { Day = "無公休日", Value = "0", IsChecked = false }
+            };
+
             return View(vm);
+
         }
 
         //refactory here
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult NewCampsite(NewCampsiteViewModel vm)
+        public ActionResult NewCampsite(ReceiveFormViewModel vm)
         {
             if (!ModelState.IsValid)
             {
@@ -151,63 +149,88 @@ namespace CampWebsite.Controllers
             }
             else
             {
-
-                tCampsite c = vm.tCampsite;
+                //
+                // save campsite
+                dbCampEntities camp = new dbCampEntities();
+                tCampsite c = new tCampsite();
+                c.fCampsiteName = vm.campName;
                 c.fMemberID = Convert.ToInt32(User.Identity.Name);
-                c.fCampsiteCheckInTime = Regex.Replace(c.fCampsiteCheckInTime, ":", String.Empty);
-                c.fCampsiteCheckOutTime = Regex.Replace(c.fCampsiteCheckOutTime, ":", String.Empty);
-
+                c.fCampsiteAddress = vm.campAddress;
+                c.fCampsiteArea = vm.SelectArea;
+                c.fCampsiteCity = vm.SelectCity;
+                c.fCampsiteCheckInTime = Regex.Replace(vm.CheckInTime, ":", String.Empty);
+                c.fCampsiteCheckOutTime = Regex.Replace(vm.CheckOutTime, ":", String.Empty);
+                c.fCampsiteIntroduction = vm.campIntro;
+                c.fCampsitePhone = vm.campPhone;
                 if (vm.withoutAltitude)
-                    c.fCampsiteAltitude = "無資料";
-
-                c.fCampsiteClosedDay = "0";
-                if (vm.DayOffs[7].Checked)
                 {
-                    c.fCampsiteClosedDay = "0";
+                    c.fCampsiteAltitude = "無資料";
                 }
                 else
                 {
+                    c.fCampsiteAltitude = vm.campAltitude;
+                }
+                c.fCampsiteClosedDay = "0";
+                if(vm.DayOffs.Count != 0)
+                {
                     c.fCampsiteClosedDay = "";
-                    foreach (var item in vm.DayOffs)
+                    foreach (var d in vm.DayOffs)
                     {
-                        if (item.Checked)
-                        {
-                            c.fCampsiteClosedDay += item.Value;
-                        }
+                        c.fCampsiteClosedDay += d;
                     }
                 }
-                if (c.fCampsiteClosedDay == "")
+                else
                 {
                     c.fCampsiteClosedDay = "0";
                 }
 
-                dbCampEntities camp = new dbCampEntities();
                 camp.tCampsite.Add(c);
                 camp.SaveChanges();
 
-                //Images/Campsites/Campsite27/Cover
-                //find campsite and use it's id 
                 var newSite =
                     from nSite in camp.tCampsite
-                    where nSite.fCampsiteName == vm.tCampsite.fCampsiteName
+                    where nSite.fCampsiteName == vm.campName
                     select nSite;
+                int campID = newSite.FirstOrDefault().fCampsiteID;
 
-                int newID = newSite.FirstOrDefault().fCampsiteID;
-                string virtualPath = "~/Images/Campsites/Campsite" + newID.ToString();
+                //find campsite and use it's id 
+                //Images/Campsites/Campsite27/Cover
+                string virtualPath = "~/Images/Campsites/Campsite" + campID.ToString();
                 string physicalPath = Server.MapPath(virtualPath);
 
                 tTentPhoto tp = new tTentPhoto();
-                tp.fTentPhotoURL = "/Images/Campsites/Campsite" + newID + "/Cover.jpg";
-                tp.fCampsiteID = newID;
+                tp.fTentPhotoURL = "/Images/Campsites/Campsite" + campID + "/Cover.jpg";
+                tp.fCampsiteID = campID;
                 camp.tTentPhoto.Add(tp);
                 camp.SaveChanges();
 
-                // find  or create Directory
-                if (!Directory.Exists(virtualPath))
+                
+                if (!Directory.Exists(virtualPath))  // find  or create Directory
                     Directory.CreateDirectory(physicalPath);
-
                 vm.CoverPhoto.SaveAs(Server.MapPath(virtualPath + "/" + "Cover.jpg"));
-                return RedirectToAction("FindMyCampsites");
+
+
+                //tag
+                /*
+                foreach (var selectedTag in vm.SelectTags)
+                {
+                    var tag =
+                        from t in camp.tTag
+                        where t.fTagName == selectedTag
+                        select t;
+                    int tagID = tag.FirstOrDefault().fTagID;
+                    tCampTag ct = new tCampTag()
+                    {
+                        fCampsiteID = campID,
+                        fTagID = tagID,
+                    };
+                    camp.tCampTag.Add(ct);
+                    camp.SaveChanges();
+
+                }*/
+
+                //return RedirectToAction("FindMyCampsites");
+                return RedirectToAction("Details","Campsite",campID);
             }
         }
         [HttpPost]
@@ -277,8 +300,8 @@ namespace CampWebsite.Controllers
                 for (int i = 0; i < vm.Quantity; i++)
                 {
                     camp.tTent.Add(myTent);
+                    camp.SaveChanges();
                 }
-                camp.SaveChanges();
                 return RedirectToAction("TentsInCampsite", new { cID = vm.CampsiteID, cName = vm.CampsiteName });
             }
         }
