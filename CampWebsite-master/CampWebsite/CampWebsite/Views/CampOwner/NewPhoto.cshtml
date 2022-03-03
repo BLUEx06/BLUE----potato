@@ -27,7 +27,6 @@
 </style>
 
 <div class="container ">
-    <div class="mb-5"></div>
     <div class="page-header mb-3">
         <h3>
             新增帳篷照片
@@ -60,15 +59,15 @@
 
 
             @* other photos *@
-        <div class="card-body py-3">
-            <label class="col-form-label w-100">其他照片</label>
-            <br />
-            <input data-val="true" id="otherPhotosInput" name="OtherPhotos" type="file" accept="image/*" onchange="loadOthers(event)" class="form-control" multiple required>
-            <span class="form-text" id="otherPhotosMessage">只接受圖檔：jpg   jpeg  png  gif</span>
-        </div>
+            <div class="form-group">
+                <label class="col-form-label w-100">其他照片</label>
+                <br />
+                <input data-val="true" id="otherPhotosInput" name="OtherPhotos" type="file" accept="image/*" onchange="loadOthers(event)" class="form-control" multiple required>
+                <span class="form-text" id="otherPhotosMessage">只接受圖檔：jpg   jpeg  png  gif</span>
+            </div>
 
             @* button *@
-            <div class="ard-body py-3">
+            <div class="form-group">
                 <button type="submit" class="btn btn-success" id="btnSend">
                     送出
                 </button>
