@@ -1,12 +1,48 @@
-﻿@* animation section *@
-@*<div id="preload_body" class="animation_bg" style="z-index:99999">
-    <div class="animation_container w-100 d-flex justify-content-center">
-        <div class="animation_wrap">
-            <img src="~/Images/chicken_logo.png" width="300" />
+﻿<!--entry animation-->
+<link href="~/Content/entryAnimation.css" rel="stylesheet" />
+<div id="preload_body" class="preload_bg">
+    <div class="preload_container w-100 d-flex justify-content-center">
+        <div class="preload_wrap">
+            <img src="~/Images/chicken_logo.png" id="animatImage" width="300" />
         </div>
     </div>
 </div>
-<h1 id="preload_heading">露過人間</h1>*@
+<h1 id="preload_heading">露過人間</h1>
+<script>
+    $(document).ready(function () {
+        $("#animatImage").on("animationend", function () {
+            $("#preload_body").hide();
+            $("#preload_heading").hide();
+        });
+    });
+
+    function clearHistory() {
+        localStorage.removeItem("isFirstTime");
+    }
+
+    function checkIfFirstTime() {
+        const isFirstTime = sessionStorage.getItem("isFirstTime");
+        if (!isFirstTime) {
+            sessionStorage.setItem("isFirstTime", true);
+            return true;
+        }
+        return false;
+    }
+
+    function checkAnimation() {
+        const isFirstTime = checkIfFirstTime();
+        if (isFirstTime == true) {
+            document.getElementById("preload_body").classList.add("active")
+        } else {
+            $("#preload_body").hide();
+            $("#preload_heading").hide();
+        }
+    }
+
+
+    //clearHistory();
+    checkAnimation();
+</script>
 
 <link rel="stylesheet" href="~/Content/homeindex.css">
 <!-- 大圖部分 -->
